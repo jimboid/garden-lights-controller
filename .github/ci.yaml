@@ -1,0 +1,29 @@
+name: ci
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  test:
+    runs-on: ubuntu-26.04
+    strategy:
+      matrix:
+        python-version: ["3.13", "3.14"]
+
+    steps:
+      - uses: actions/checkout@v7.0.1
+
+      - name: Set up Python ${{ matrix.python-version }}
+        uses: actions/setup-python@v7.0.0
+        with:
+          python-version: ${{ matrix.python-version }}
+
+      - name: Install dependencies
+        # RPi.GPIO is skipped automatically here - it's marked in
+        # pyproject.toml as only installable on real Raspberry Pi hardware,
+        # and the test suite mocks it out (see tests/conftest.py).
+        run: pip install .[test]
+
+      - name: Run tests
+        run: pytest -v
