@@ -1,0 +1,35 @@
+# Configuration for mqtt_lights.py
+#
+# Keep this file out of version control (or use a separate untracked copy)
+# since it contains your MQTT broker credentials, and consider restricting
+# its permissions, e.g. `chmod 600 lights_config.yaml`.
+
+mqtt:
+  broker: <ip-address>
+  port: <port>
+  username: <username>
+  password: <password>
+  client_id: <client_id>
+
+# How often (in seconds) to re-publish the current state of every light, in
+# addition to publishing on change and whenever Home Assistant comes back
+# online. Set to 0 to disable periodic publishing.
+status_publish_interval_seconds: 300
+
+# Each entry describes one Home Assistant light entity and the GPIO (BCM
+# numbering) pins it switches. Add, remove or edit entries here without
+# touching the Python script.
+lights:
+  - id: gardenfence
+    name: garden_fence_light
+    pins: [12, 16, 20, 21, 26]   # Fence 1-5
+
+  - id: gardenwall
+    name: garden_wall_light
+    pins: [22, 10, 9, 11, 5, 6, 13]   # Wall lights 7,6,5,4,3,2,1
+
+  - id: gardenspot
+    name: garden_spot_light
+    pins: [19]   # Spotlights
+
+# Pins 27, 17, 4 are currently unused ("Nothing" in the original comments).

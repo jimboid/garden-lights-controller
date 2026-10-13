@@ -1,0 +1,30 @@
+[project]
+name = "garden-lights-controller"
+version = "1.0.0"
+description = "MQTT bridge for garden lights on Raspberry Pi GPIO, with Home Assistant MQTT discovery"
+requires-python = ">=3.9"
+dependencies = [
+    "paho-mqtt>=1.6,<2",
+    "PyYAML>=6.0",
+    # Only installable/usable on real Raspberry Pi hardware.
+    "RPi.GPIO>=0.7.1; platform_machine in 'armv6l armv7l aarch64'",
+]
+
+[project.optional-dependencies]
+test = [
+    "pytest>=7.0",
+]
+
+[project.scripts]
+garden-lights = "garden_lights_controller:main"
+
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[tool.setuptools]
+py-modules = ["garden_lights_controller"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+pythonpath = ["."]
