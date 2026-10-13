@@ -1,0 +1,24 @@
+[Unit]
+Description=MQTT Garden Lights
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+Type=simple
+ExecStart=/usr/bin/python3 -m garden_lights_controller --config /home/pi/garden-lights-controller/lights_config.yaml
+WorkingDirectory=/home/pi/garden-lights-controller
+User=pi
+Group=gpio
+Restart=on-failure
+RestartSec=10
+
+# Optional hardening - uncomment if you want to try it; ProtectHome is set
+# to read-only rather than true since the service needs to read the config
+# file from /home/pi.
+#NoNewPrivileges=true
+#ProtectSystem=full
+#ProtectHome=read-only
+#PrivateTmp=true
+
+[Install]
+WantedBy=multi-user.target
